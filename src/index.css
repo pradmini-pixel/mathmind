@@ -1,0 +1,225 @@
+/*
+ * MathMind base styles — Phase 2 placeholder foundation.
+ * The palette variables are laid down now so Phase 3 polish refines rather than
+ * rewrites. Feel: playful but CALM. One task per screen, generous spacing,
+ * big touch targets, large rounded type.
+ */
+:root {
+  /* Space-blue background + warm accents. */
+  --bg: #171a3a;
+  --bg-2: #20244f;
+  --surface: #2a2f63;
+  --surface-2: #343a78;
+  --ink: #f3f5ff;
+  --ink-soft: #b9c0ef;
+  --coral: #ff7a6b;
+  --sunshine: #ffd15c;
+  --mint: #67e0b0;
+  --lav: #b79cff;
+
+  --radius: 20px;
+  --radius-lg: 28px;
+  --tap: 56px;
+
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: radial-gradient(1200px 800px at 50% -10%, var(--bg-2), var(--bg));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* App shell: always one centered task, comfortable max width. */
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+}
+
+.screen {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.step-label {
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.headline {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.subtext {
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Big, friendly primary button. */
+.btn {
+  min-height: var(--tap);
+  padding: 16px 28px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--coral);
+  color: #2a1410;
+  font-size: 20px;
+  font-weight: 800;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.btn:active {
+  transform: scale(0.96);
+}
+.btn:hover {
+  filter: brightness(1.05);
+}
+.btn--soft {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.btn--mint {
+  background: var(--mint);
+  color: #0c2c22;
+}
+.btn--wide {
+  width: 100%;
+}
+
+/* Progress dots for the warm-up streak. */
+.dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--surface);
+}
+.dot--done {
+  background: var(--mint);
+}
+.dot--current {
+  background: var(--sunshine);
+}
+
+.text-muted {
+  color: var(--ink-soft);
+}
+
+/* Number pad keys. */
+.pad-key {
+  min-height: var(--tap);
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 26px;
+  font-weight: 800;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+.pad-key:active:not(:disabled) {
+  transform: scale(0.94);
+}
+.pad-key:disabled {
+  opacity: 0.4;
+}
+.pad-key--soft {
+  background: var(--bg-2);
+}
+.pad-key--go {
+  background: var(--mint);
+  color: #0c2c22;
+}
+
+/* Multiple-choice buttons. */
+.choice {
+  min-height: 72px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 800;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+.choice:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.choice:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.choice:disabled {
+  opacity: 0.5;
+}
+
+/* Focus-game grid cells. */
+.focus-cell {
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.focus-cell:disabled {
+  cursor: default;
+}
+
+/* Launch stat pills. */
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 17px;
+  font-weight: 700;
+}
