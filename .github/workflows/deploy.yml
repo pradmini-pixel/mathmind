@@ -1,29 +1,27 @@
 name: Deploy MathMind to GitHub Pages
 
-# Build the Vite app and publish it to the `gh-pages` branch on every push to
-# the main development branches. GitHub Pages serves that branch at
-# https://<user>.github.io/mathmind/.
-#
-# We use the branch-publish method (not the official Pages Actions) on purpose:
-# the `github-pages` environment restricts the Actions-deploy method to the
-# default branch, which would block deploying this feature branch. Publishing to
-# a branch has no such restriction, so pushes here go live directly.
+# Deploys via the official GitHub Pages Actions, from `main`.
+# `main` is the repo's default branch, so it satisfies the github-pages
+# environment's deployment-branch rule (which blocked the feature branch).
+# Requires repo Settings → Pages → Source = "GitHub Actions".
+# Served at https://<user>.github.io/mathmind/.
 on:
   push:
     branches:
       - main
-      - claude/mathmind-warmup-app-g44jpz
   workflow_dispatch:
 
 permissions:
-  contents: write # needed to push the built site to the gh-pages branch
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: pages-deploy
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,8 +42,18 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
