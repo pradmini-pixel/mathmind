@@ -39,6 +39,12 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Setup Pages
+        # Switches the Pages site to "GitHub Actions" build type via the API and
+        # exposes the base path — without this the first Actions deployment
+        # cannot finalize ("Deployment failed, try again later").
+        uses: actions/configure-pages@v5
+
       - name: Build
         run: npm run build
 
