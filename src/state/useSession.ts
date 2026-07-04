@@ -244,5 +244,3 @@ export function useSession() {
     ],
   );
 }
-
-export type Session = ReturnType<typeof useSession>;

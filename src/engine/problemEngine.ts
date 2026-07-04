@@ -263,11 +263,10 @@ function genPattern(tier: Tier, rng: Rng): Problem {
     hint = `Double the number, then add 1.`;
   }
 
-  const choices = makeChoices(answer, 4, rng, () => {
-    const jitter = rng.pick([-2, -1, 1, 2] as const);
-    const factorNoise = rng.pick([answer - terms[3], terms[3], 1] as const);
-    return answer + jitter * Math.max(1, Math.abs(factorNoise));
-  });
+  // Distractors sit a few "gaps" away from the answer — plausible near-misses,
+  // well-separated for geometric patterns where the gap is large.
+  const gap = Math.max(1, Math.abs(terms[3] - terms[2]));
+  const choices = makeChoices(answer, 4, rng, () => answer + rng.pick([-2, -1, 1, 2] as const) * gap);
 
   return {
     id: makeId('pattern', tier),
@@ -383,17 +382,12 @@ export function generateProblem(
 // ---------------------------------------------------------------------------
 
 /**
- * Returns true if `input` is an acceptable answer for `problem`.
- *   - Estimation problems with an `acceptBand` accept anything in [min, max].
- *   - Everything else requires exact numeric equality.
- * Non-finite input is always incorrect (but never "punished" by the UI).
+ * Returns true if `input` exactly matches the problem's answer. (Estimation is
+ * multiple-choice, so the chosen estimate is compared exactly too.) Non-finite
+ * input is always incorrect — but the UI never "punishes" it.
  */
 export function validateAnswer(problem: Problem, input: number): boolean {
-  if (!Number.isFinite(input)) return false;
-  if (problem.acceptBand) {
-    return input >= problem.acceptBand.min && input <= problem.acceptBand.max;
-  }
-  return input === problem.answer;
+  return Number.isFinite(input) && input === problem.answer;
 }
 
 // ---------------------------------------------------------------------------

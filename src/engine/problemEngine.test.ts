@@ -87,19 +87,6 @@ describe('validateAnswer', () => {
     expect(validateAnswer(p, NaN)).toBe(false);
     expect(validateAnswer(p, Infinity)).toBe(false);
   });
-
-  it('accepts anything inside an estimation acceptBand', () => {
-    const est = {
-      ...p,
-      answer: 800,
-      acceptBand: { min: 680, max: 920 },
-    };
-    expect(validateAnswer(est, 680)).toBe(true);
-    expect(validateAnswer(est, 800)).toBe(true);
-    expect(validateAnswer(est, 920)).toBe(true);
-    expect(validateAnswer(est, 679)).toBe(false);
-    expect(validateAnswer(est, 921)).toBe(false);
-  });
 });
 
 describe('adaptive engine — step up', () => {

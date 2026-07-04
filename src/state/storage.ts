@@ -52,11 +52,6 @@ export function loadProgress(): Progress {
   return load().progress;
 }
 
-export function saveSettings(settings: Settings): void {
-  const current = load();
-  persist({ ...current, settings });
-}
-
 export function saveProgress(progress: Progress): void {
   const current = load();
   persist({ ...current, progress });

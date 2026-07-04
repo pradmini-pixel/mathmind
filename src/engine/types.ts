@@ -54,11 +54,6 @@ export interface Problem {
    * "here's how it works", never "you got it wrong".
    */
   worked: string;
-  /**
-   * Estimation problems accept a band around `answer` rather than an exact
-   * match. Undefined ⇒ exact numeric equality required.
-   */
-  acceptBand?: { min: number; max: number };
 }
 
 /** Result of the child's attempt on a problem, fed into the adaptive engine. */
